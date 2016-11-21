@@ -1,0 +1,59 @@
+/*
+ * Globals
+ */
+body {
+  font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px !important;
+  direction: ltr;
+  cursor: pointer;
+}
+
+.item-info {
+  font-size: 20px;
+}
+
+.show-item-inner {
+  height: 120px;
+}
+
+.show-item-pic {
+  width: auto;
+  height: 100px;
+  float: left;
+}
+
+.my-img {
+  width: auto;
+  height: auto;
+  max-height: 100px;
+  max-width: 100px;
+}
+
+.show-item-info {
+  margin-left: 110px;
+}
+
+.show-item-meta {
+  color: #999;
+  font-size: 13px;
+}
+
+
+.show-item-link:link, .show-item-link:visited,
+.show-item-link:hover, .show-item-link:active  {
+  text-decoration: none;
+}

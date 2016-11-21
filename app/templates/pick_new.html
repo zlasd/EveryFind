@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+
+{% block my_container %}
+<h1 class="page-header">添加一个新的拣获记录</h1>
+{{ macro.new_record_form(1) }}
+{% endblock %}

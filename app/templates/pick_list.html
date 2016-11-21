@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block main_content %}
+<div class="pick-list">
+  {% for item in records %}
+  {{ macro.display_short(item, myMap) }}
+  {% endfor %}
+</div>
+{% endblock %}

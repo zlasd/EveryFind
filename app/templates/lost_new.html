@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block my_container %}
+{% if session.id %}
+  <h1 class="page-header">添加一个新的失物记录</h1>
+  {{ macro.new_record_form(0) }}
+{% else %}
+  <h3 style="color: red; text-align: center;">你需要先登录</h3>
+{% endif %}
+{% endblock %}

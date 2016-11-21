@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block main_content %}
+
+<h1 class="page-header">最近招领记录:</h1>
+{% for item in pick_records %}
+{{ macro.display_short(item, myMap) }}
+{% endfor %}
+
+<h1 class="page-header">最近寻物记录:</h1>
+{% for item in lost_records %}
+{{ macro.display_short(item, myMap) }}
+{% endfor %}
+
+{% endblock %}

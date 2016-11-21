@@ -1,0 +1,118 @@
+{% macro display_short(item, myMap) %}
+<div class="show-item-inner">
+  {% if not item.user_id %}
+  <div class="show-item-pic">
+    <a href="{{ url_for('page_pick_info_id', id=item.id) }}">
+      <img class="my-img img-responsive img-thumbnail" src="{{ url_for('static', filename='img/picture') }}/{{ item.id }}.{{ item.pic_name }}" onerror='this.src="{{ url_for("static", filename="img/No_image.jpg") }}"' />
+    </a>
+  </div>
+  <div class="show-item-info">
+  {% else %}
+  <div class="show-item-info" style="margin-left: 30px">
+  {% endif %}
+    <div class="show-item-meta">
+      {% if item.user_id %}<p style="float: right">发布人: {{ item.user.student_name.decode("utf-8") }}</p>{% endif %}
+      <p>该信息发布于{{ item.create_time }}</p>
+    </div>
+    <div class="show-item-sec">
+      <a class="show-item-link" href="{% if item.user_id %}{{ url_for('page_lost_info_id', id=item.id) }}{% else %}{{ url_for('page_pick_info_id', id=item.id) }}{% endif %}">
+        <h4>{{ myMap[item.type][0] }}:&nbsp;
+          {{ item.section1.decode("utf-8") }}&nbsp;
+          {{ item.section2.decode("utf-8") }}
+        </h4>
+        <p>物品描述:{{ item.description.decode("utf-8")[:50] }}...</p>
+      </a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro display_item(record, myMap) %}
+<div>
+  {% if record.pic_name %}
+  <img class="img-responsive" src="{{ url_for('static', filename='img/picture') }}/{{ record.id }}.{{ record.pic_name }}" />
+  {% endif %}
+  <div class="item-post">
+    <p class="item-info">
+      <b>发布时间:&nbsp;</b>
+      {{ record.create_time }}<br>
+      <b>失物类型:&nbsp;</b>
+      {{ myMap[record.type][0] }}<br>
+      <b>{{ myMap[record.type][1] }}:&nbsp;</b>
+      {{ record.section1.decode("utf-8") }}<br>
+      <b>{{ myMap[record.type][2] }}:&nbsp;</b>
+      {{ record.section2.decode("utf-8") }}<br>
+      <b>{{ myMap[record.type][3] }}:&nbsp;</b>
+      {{ record.section3.decode("utf-8") }}<br>
+      <b>失物描述:&nbsp;</b>
+      {{ record.description.decode("utf-8") }}<br>
+      {% if record.is_end %}
+      <p style="color: red">已成功找回</p>
+      {% endif %}
+    </p>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro new_record_form(isPick) %}
+<div>
+  <form id="new-record-form" role="form" action="{% if isPick %}{{ url_for('page_pick_new') }}{% else %}{{ url_for('page_lost_new') }}{% endif %}" method="POST" enctype="multipart/form-data">
+    <div class="form-group" style="width: 50%">
+      <label for="new-record-type">失物类型</label>
+      <select class="form-control" id="new-record-type" name="type" onchange="newRecordTypeChange()">
+        <option value="">请选择</option>
+        <option value="student card">校园卡</option>
+        <option value="credit card">银行卡</option>
+        <option value="else">其他</option>
+      </select>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section1"></label>
+      <input type="text" name="section1" class="form-control" id="new-record-section1" required>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section2"></label>
+      <input type="text" name="section2" class="form-control" id="new-record-section2" required>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section3"></label>
+      <input type="text" name="section3" class="form-control" id="new-record-section3" required>
+    </div>
+    <script>
+    </script>
+    <div class="form-group" style="width: 70%">
+      <label for="new-record-desc">物品描述</label>
+      <textarea rows="5" class="form-control" id="new-record-desc" name="description" required></textarea>
+    </div>
+
+    {% if isPick %}
+    <div class="form-group" style="width: 50%">
+      <label for="new-record-contact-type">联系方式类型</label>
+      <select class="form-control" name="contact_type" id="new-record-contact-type">
+        <option value="">请选择</option>
+        <option value="QQ">QQ</option>
+        <option value="WeChat">微信</option>
+        <option value="phone">手机</option>
+        <option value="email">邮箱</option>
+      </select>
+    </div>
+    <div class="form-group" style="width: 50%">
+      <label for="new-record-contact-way">联系方式</label>
+      <input type="text" name="contact_way" class="form-control" id="new-record-contact-way" required>
+    </div>
+    <div class="form-group">
+      <label for="picture">照片&nbsp;</label>
+      <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>选择图片...</span>
+        <input id="picture" type="file" name="picture" accept="image/*" onchange="uploadSelected()">
+      </span>
+    </div>
+    <button type="button" onclick="newPickSubmit()" class="btn btn-default">Submit</button>
+    {% else %}
+    <button type="button" onclick="newLostSubmit()" class="btn btn-default">Submit</button>
+    {% endif %}
+  </form>
+</div>
+{% endmacro %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block my_container %}
+<h1 class="page-header">寻物#{{ record.id }}: </h1>
+{{ macro.display_item(record, myMap) }}
+<div class="contact_info">
+  <p class="item-info">
+    <b>联系人:&nbsp;</b>
+    {{ record.user.student_name.decode("utf-8") }}<br>
+    <b>联系方式类型:&nbsp;</b>
+    {{ myMap[record.user.contact_type] }}<br>
+    <b>联系方式:&nbsp;</b>
+    {{ record.user.contact_way }}<br>
+  </p>
+</div>
+{% endblock %}
