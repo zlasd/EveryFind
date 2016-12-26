@@ -1,0 +1,52 @@
+{% extends "user_base.html" %}
+
+{% block user_panel %}
+<div style="margin-left: 50px">
+  <div style="margin-bottom: 50px">
+    <h2 style="margin-bottom: 20px">修改账户信息:</h2>
+    <form role="form" action="{{ url_for('page_user_information') }}" method="post">
+      <div class="form-group" style="width: 50%">
+        <label for="modify-nickname">昵称</label>
+        <input class="form-control" name="nickname" id="modify-nickname" placeholder="NickName" required>
+      </div>
+      <div class="form-group" style="width: 50%">
+        <label for="modify-contack-type">联系方式类型</label>
+        <select class="form-control" name="contact_type" id="modify-contact-type">
+          <option value="QQ">QQ</option>
+          <option value="WeChat">微信</option>
+          <option value="phone">手机</option>
+          <option value="email">邮箱</option>
+        </select>
+      </div>
+      <div class="form-group" style="width: 50%">
+        <label for="modify-contact-way">联系方式</label>
+        <input name="contact_way" class="form-control" id="modify-contact-way" placeholder="Contact Way" required>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-success" style="width: 12%" type="submit" value="确认">
+      </div>
+    </form>
+  </div>
+  <hr class="divider">
+  <div style="margin-bottom: 50px">
+    <h2 style="margin-bottom: 20px">修改密码:</h2>
+    <form role="form" action="{{ url_for('page_user_password') }}" method="post">
+      <div class="form-group" style="width: 50%">
+        <label for="modify-old-password">原密码</label>
+        <input type="password" class="form-control" name="old_password" id="modify-old-password" placeholder="Old Password" required>
+      </div>
+      <div class="form-group" style="width: 50%">
+        <label for="modify-new-password">新密码</label>
+        <input type="password" class="form-control" name="new_password" id="modify-new-password" placeholder="New Password" required>
+      </div>
+      <div class="form-group" style="width: 50%">
+        <label for="modify-new-password2">新密码确认</label>
+        <input type="password" class="form-control" name="new_password2" id="modify-new-password2" placeholder="New Password Confirm" required>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-success" style="width: 12%" type="submit" value="确认">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

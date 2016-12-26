@@ -1,0 +1,11 @@
+{% extends "user_base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block user_panel %}
+<div style="margin-left: 50px">
+  <h2 style="margin-bottom: 20px">丢失记录</h2>
+  {% for record in lost_records %}
+  {{ macro.display_short(record, myMap) }}
+  {% endfor %}
+</div>
+{% endblock %}

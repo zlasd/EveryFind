@@ -38,11 +38,16 @@
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <img src="{{ url_for('static', filename='img/avatar')}}/{{ user.username[0] }}_40.png" style="height: 20px; width:20px"/>
               {{ user.username }}
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li onclick="myLogout()"><a href="#">登出</a></li>
+              <li><a href="/user/information">主页</a></li>
+              <li><a href="/user/setting">设置</a></li>
+              <li><a href="/user/records">记录</a></li>
+              <li class="divider"></li>
+              <li onclick="myLogout()"><a href="#">注销</a></li>
             </ul>
           </li>
         </ul>
@@ -58,6 +63,12 @@
   <div style="height: 70px"></div>
 
   <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+    {% endfor %}
     {% block my_container %}
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-md-9 main">
@@ -80,6 +91,18 @@
           </div>
           <ul class="list-group">
             <li class="list-group-item"><a href="http://www.sysu.edu.cn" target="_blank">中山大学</a></li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="http://getbootstrap.com/" target="_blank">Bootstrap</a></li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="http://flask.pocoo.org/" target="_blank">Flask</a></li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="http://nginx.org/" target="_blank">Nginx</a></li>
+          </ul>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="http://en.gravatar.com/" target="_blank">Gravatar</a></li>
           </ul>
         </div>
       </div>
@@ -147,7 +170,7 @@
                 <input type="text" class="form-control" placeholder="Contact Way" required>
               </div>
             </div>
-            <p id="signup-form-warning" style="color: red; display:none">表单校验</p>
+            <p id="signup-form-warning" style="color: red; display:none"></p>
             <button type="button" class="btn btn-lg btn-success btn-block" onclick="mySignUp()">
               <span class="glyphicon glyphicon-home"></span>
               &nbsp;注册
@@ -180,7 +203,7 @@
                 <input type="password" class="form-control" placeholder="Password" required>
               </div>
             </div>
-            <p id="login-form-warning" style="color: red; display:none">表单校验</p>
+            <p id="login-form-warning" style="color: red; display:none"></p>
             <button type="button" id="login-btn" class="btn btn-lg btn-primary btn-block" onclick="myLogin()">
               <span class="glyphicon glyphicon-log-in"></span>
               &nbsp;登录

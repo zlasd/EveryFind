@@ -10,6 +10,12 @@ logging.basicConfig(level=logging.DEBUG,
 	filename='my.log',
 	filemode='w')
 
+console = logging.StreamHandler()  
+console.setLevel(logging.INFO)   
+formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s')  
+console.setFormatter(formatter)    
+logging.getLogger('').addHandler(console)  
+
 from flask import Flask
 import config
 

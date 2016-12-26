@@ -2,9 +2,14 @@
 {% import "_macro.html" as macro %}
 
 {% block main_content %}
+{{ macro.search_bar(True) }}
+<hr class="divider">
+<h2 class="page-header">招领检索记录</h2>
 <div class="pick-list">
   {% for item in records %}
   {{ macro.display_short(item, myMap) }}
+  {% else %}
+  <h3 style="text-align: center">未找到匹配的记录</h3>
   {% endfor %}
 </div>
 {% endblock %}

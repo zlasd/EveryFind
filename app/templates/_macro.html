@@ -1,15 +1,11 @@
 {% macro display_short(item, myMap) %}
 <div class="show-item-inner">
-  {% if not item.user_id %}
   <div class="show-item-pic">
-    <a href="{{ url_for('page_pick_info_id', id=item.id) }}">
-      <img class="my-img img-responsive img-thumbnail" src="{{ url_for('static', filename='img/picture') }}/{{ item.id }}.{{ item.pic_name }}" onerror='this.src="{{ url_for("static", filename="img/No_image.jpg") }}"' />
+    <a href="{% if not item.user_id %}{{ url_for('page_pick_info_id', id=item.id) }}{% else %}{{ url_for('page_lost_info_id', id=item.id) }}{% endif %}">
+      <img class="my-img img-responsive img-thumbnail" src="{{ url_for('static', filename='img/picture') }}/{% if not item.user_id %}pick{% else %}lost{% endif %}/{{ item.id }}.{{ item.pic_name }}" onerror='this.src="{{ url_for("static", filename="img/No_image.jpg") }}"' />
     </a>
   </div>
   <div class="show-item-info">
-  {% else %}
-  <div class="show-item-info" style="margin-left: 30px">
-  {% endif %}
     <div class="show-item-meta">
       {% if item.user_id %}<p style="float: right">发布人: {{ item.user.student_name.decode("utf-8") }}</p>{% endif %}
       <p>该信息发布于{{ item.create_time }}</p>
@@ -20,6 +16,7 @@
           {{ item.section1.decode("utf-8") }}&nbsp;
           {{ item.section2.decode("utf-8") }}
         </h4>
+        {% if item.is_end %}<p style="float: right; color: red">已完成</p>{% endif %}
         <p>物品描述:{{ item.description.decode("utf-8")[:50] }}...</p>
       </a>
     </div>
@@ -27,10 +24,25 @@
 </div>
 {% endmacro %}
 
-{% macro display_item(record, myMap) %}
+{% macro display_item(record, myMap, isPick) %}
 <div>
   {% if record.pic_name %}
-  <img class="img-responsive" src="{{ url_for('static', filename='img/picture') }}/{{ record.id }}.{{ record.pic_name }}" />
+  <img class="img-thumbnail" style="max-width: 280px; max-height: 280px" src="{{ url_for('static', filename='img/picture') }}/{% if isPick %}pick{% else %}lost{% endif %}/{{ record.id }}.{{ record.pic_name }}" data-toggle="modal" data-target="#myModal" />
+  <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+        <img style="max-width: 100%" src="{{ url_for('static', filename='img/picture') }}/{% if isPick %}pick{% else %}lost{% endif %}/{{ record.id }}.{{ record.pic_name }}" />
+      </div>
+    </div>
+  </div>
+  </div>
+  {% endif %}
+  {% if record.is_end %}
+  <h2 style="color: red">已成功找回</h2>
   {% endif %}
   <div class="item-post">
     <p class="item-info">
@@ -46,9 +58,6 @@
       {{ record.section3.decode("utf-8") }}<br>
       <b>失物描述:&nbsp;</b>
       {{ record.description.decode("utf-8") }}<br>
-      {% if record.is_end %}
-      <p style="color: red">已成功找回</p>
-      {% endif %}
     </p>
   </div>
 </div>
@@ -86,6 +95,7 @@
       <textarea rows="5" class="form-control" id="new-record-desc" name="description" required></textarea>
     </div>
 
+
     {% if isPick %}
     <div class="form-group" style="width: 50%">
       <label for="new-record-contact-type">联系方式类型</label>
@@ -101,6 +111,8 @@
       <label for="new-record-contact-way">联系方式</label>
       <input type="text" name="contact_way" class="form-control" id="new-record-contact-way" required>
     </div>
+    {% endif %}
+
     <div class="form-group">
       <label for="picture">照片&nbsp;</label>
       <span class="btn btn-success fileinput-button">
@@ -109,10 +121,34 @@
         <input id="picture" type="file" name="picture" accept="image/*" onchange="uploadSelected()">
       </span>
     </div>
+
+    {% if isPick %}
     <button type="button" onclick="newPickSubmit()" class="btn btn-default">Submit</button>
     {% else %}
     <button type="button" onclick="newLostSubmit()" class="btn btn-default">Submit</button>
     {% endif %}
+  </form>
+</div>
+{% endmacro %}
+
+
+{% macro search_bar(isPick) %}
+<div style="margin: 20px 0px;">
+  <form role="form" class="form-inline" action="{% if isPick %}{{ url_for('page_pick_list') }}{% else %}{{ url_for('page_lost_list') }}{% endif %}" method="post">
+    <div class="form-group">
+      <select class="form-control" name="type" id="search-type">
+        <option value="">所有</option>
+        <option value="student card">校园卡</option>
+        <option value="credit card">银行卡</option>
+        <option value="else">其他</option>
+      </select>
+    </div>
+    <div class="form-group" >
+      <input name="search_str" class="form-control" id="search-str">
+    </div>
+    <div class="form-group" style="width: 40%">
+      <input class="btn btn-primary"  type="submit" value="GO!">
+    </div>
   </form>
 </div>
 {% endmacro %}

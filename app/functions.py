@@ -23,3 +23,11 @@ def myEncode(s):
 def myDecode(s):
 	if s: return s.decode("utf-8")
 	return s
+
+myMap = {
+'QQ' : u"QQ", 'WeChat' : u"微信",
+'phone' : u"手机", 'email' : u"邮箱",
+'student card' : (u'校园卡', u"学号", u"姓名", u"地点"),
+'credit card' : (u"银行卡", u"银行", u"卡号后4位", u"地点"),
+'else' : (u"其他", u"类型", u"地点", u"时间")
+}

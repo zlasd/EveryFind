@@ -57,3 +57,27 @@ body {
 .show-item-link:hover, .show-item-link:active  {
   text-decoration: none;
 }
+
+.my-stat {
+	float: left;
+	font-size: 14px;
+	color: #4078c0;
+	text-align: center;
+}
+
+.my-stat-count {
+	font-size: 32px;
+	font-weight: 600;
+	line-height: 1;
+	display: block;
+}
+
+.my-text-muted {
+	color: #767676;
+}
+
+.my-avatar {
+  margin-left: 20px;
+  max-width: 100%;
+  max-height: 100%;
+}

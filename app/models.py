@@ -15,7 +15,7 @@ class User(Base):
 	id = Column(Integer, primary_key=True)
 	username = Column(String(30), nullable=False,unique=True, index=True)
 	password = Column(String(32), nullable=False)
-	nickname = Column(String(30))
+	nickname = Column(String(30), nullable=False)
 	student_id = Column(String(30))
 	student_name = Column(String(30))
 	role = Column(Enum('admin','authen_user','unanthen_user'))
@@ -38,6 +38,9 @@ class User(Base):
 		self.contact_way = contact_way
 		self.create_time = datetime.now()
 
+	def count_end_records(self):
+		return len([recd for recd in self.lost_records if recd.is_end])
+
 	def __repr__(self):
 		return '<User %s>' % self.username
 
@@ -48,6 +51,7 @@ class Lost_record(Base):
 	user_id = Column(Integer, ForeignKey('user.id'))
 	type = Column(Enum('student card','credit card','else'))
 	description = Column(Text)
+	pic_name = Column(String(10))
 	is_end = Column(Boolean, default=False)
 	section1 = Column(String(30))
 	section2 = Column(String(30))
@@ -57,10 +61,11 @@ class Lost_record(Base):
 
 	user = relationship('User', backref=backref('lost_records', order_by=desc(create_time)))
 
-	def __init__(self, user_id, type, description, is_end=False, section1='', section2='', section3=''):
+	def __init__(self, user_id, type, description, pic_name, is_end=False, section1='', section2='', section3=''):
 		self.user_id = user_id
 		self.type = type
 		self.description = description
+		self.pic_name = pic_name
 		self.is_end = is_end
 		self.section1 = section1
 		self.section2 = section2

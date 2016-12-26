@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "_macro.html" as macro %}
+
+{% block my_container %}
+<h1 class="page-header">修改失物记录</h1>
+
+<div>
+  <form id="new-record-form" role="form" action="{{ url_for('page_lost_info_id_modify', id=record.id) }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group" style="width: 50%">
+      <label for="new-record-type">失物类型</label>
+      <select class="form-control" id="new-record-type" name="type" onchange="newRecordTypeChange()">
+        <option value="">请选择</option>
+        <option value="student card">校园卡</option>
+        <option value="credit card">银行卡</option>
+        <option value="else">其他</option>
+      </select>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section1"></label>
+      <input type="text" name="section1" class="form-control" id="new-record-section1" required>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section2"></label>
+      <input type="text" name="section2" class="form-control" id="new-record-section2" required>
+    </div>
+    <div class="form-group section" style="width: 50%; display: none;">
+      <label for="new-record-section3"></label>
+      <input type="text" name="section3" class="form-control" id="new-record-section3" required>
+    </div>
+    <script>
+    </script>
+    <div class="form-group" style="width: 70%">
+      <label for="new-record-desc">物品描述</label>
+      <textarea rows="5" class="form-control" id="new-record-desc" name="description" required></textarea>
+    </div>
+
+    <input type="submit" class="btn btn-default" value="提交">
+  </form>
+</div>
+{% endblock %}

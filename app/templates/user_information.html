@@ -1,0 +1,14 @@
+{% extends "user_base.html" %}
+
+{% block user_panel %}
+<div style="margin-left:50px">
+  <h1>用户信息:</h1>
+  <table class="table table-hover">
+    <tbody>
+      <tr><td>学号</td><td>{{ user.student_id }}</td></tr>
+      <tr><td>姓名</td><td>{{ user.student_name.decode('utf-8') }}</td></tr>
+      <tr><td>联系方式</td><td>{{ myMap[user.contact_type] }}: {{ user.contact_way }}</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
